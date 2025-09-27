@@ -1,0 +1,395 @@
+{
+  "farm_id": "F001",
+  "metadata": {
+    "analysis_id": "bdc911b0-7aa9-4de1-851f-e25fb8cc832b",
+    "analysis_date": "2025-09-08T19:49:45.337636",
+    "detected_zone": {
+      "code": "Zone_12_West_Coast",
+      "name": "West Coast",
+      "climate_type": "Humid tropical",
+      "elevation": "Low",
+      "major_crops": [
+        "Rice",
+        "Coconut",
+        "Spices",
+        "Rubber"
+      ]
+    },
+    "data_sources": [
+      "Remote sensing data",
+      "Soil analysis reports",
+      "Historical climate data",
+      "Crop yield databases"
+    ],
+    "model_version": "v2.1"
+  },
+  "report": {
+    "farm_profile": {
+      "location": {
+        "latitude": 10.546179,
+        "longitude": 76.41653
+      },
+      "climate": {
+        "annual_rainfall_mm": 728.6,
+        "rainy_days": 50,
+        "avg_temp_c": 26.05294117647059,
+        "avg_humidity_pct": 87.96862745098038,
+        "vegetation_health": "Excellent"
+      },
+      "soil": {
+        "type": "Sandy Clay Loam",
+        "texture": "Sandy Clay Loam",
+        "ph": 52.0,
+        "ph_status": "Very Acidic",
+        "organic_carbon_pct": 2.05,
+        "nutrient_status": "Good",
+        "clay_pct": 24.05,
+        "sand_pct": 47.55,
+        "silt_pct": 15.8,
+        "cec": 86.0
+      }
+    },
+    "key_observations": {
+      "rainfall": {
+        "kharif_mm": 728.6,
+        "rabi_mm": 0.0,
+        "recent_rainfall_mm": 353.1
+      },
+      "temperature": {
+        "avg_temp_c": 26.05294117647059,
+        "recent_avg_temp_c": 26.22666666666667,
+        "temp_variability": 0.9837383678959505
+      },
+      "humidity": {
+        "avg_humidity_pct": 87.96862745098038,
+        "recent_avg_humidity_pct": 87.32666666666667
+      },
+      "stress_indicators": {
+        "heat_stress_days": 0,
+        "drought_stress_days": 1
+      }
+    },
+    "recommendations": {
+      "rice_varieties": [
+        {
+          "variety_id": "RICE_017",
+          "variety_name": "Rice Variety 17",
+          "category": "rice",
+          "suitability_score": 1.0,
+          "carbon_potential": 2.2,
+          "market_value": "Premium",
+          "confidence_level": 0.85,
+          "zones": [
+            "Zone_12_West_Coast"
+          ],
+          "climate_suitability": "Humid",
+          "water_requirement": "High",
+          "soil_preference": "Red lateritic"
+        },
+        {
+          "variety_id": "RICE_032",
+          "variety_name": "Rice Variety 32",
+          "category": "rice",
+          "suitability_score": 1.0,
+          "carbon_potential": 2.0,
+          "market_value": "Premium",
+          "confidence_level": 0.85,
+          "zones": [
+            "Zone_12_West_Coast"
+          ],
+          "climate_suitability": "Humid",
+          "water_requirement": "High",
+          "soil_preference": "Alluvial"
+        },
+        {
+          "variety_id": "RICE_047",
+          "variety_name": "Rice Variety 47",
+          "category": "rice",
+          "suitability_score": 1.0,
+          "carbon_potential": 3.4000000000000004,
+          "market_value": "Premium",
+          "confidence_level": 0.85,
+          "zones": [
+            "Zone_12_West_Coast"
+          ],
+          "climate_suitability": "Humid",
+          "water_requirement": "High",
+          "soil_preference": "Clay loam"
+        },
+        {
+          "variety_id": "RICE_005",
+          "variety_name": "Jyothi",
+          "category": "rice",
+          "suitability_score": 0.841,
+          "carbon_potential": 3.3,
+          "market_value": "High",
+          "confidence_level": 0.7149,
+          "zones": [
+            "Zone_12_West_Coast"
+          ],
+          "climate_suitability": "Humid tropical",
+          "water_requirement": "High",
+          "soil_preference": "Lateritic"
+        },
+        {
+          "variety_id": "RICE_003",
+          "variety_name": "Pusa Basmati-1121",
+          "category": "rice",
+          "suitability_score": 0.7,
+          "carbon_potential": 2.5,
+          "market_value": "Premium",
+          "confidence_level": 0.595,
+          "zones": [
+            "Zone_5_Upper_Gangetic",
+            "Zone_6_Trans_Gangetic"
+          ],
+          "climate_suitability": "Semi-arid",
+          "water_requirement": "Medium",
+          "soil_preference": "Well-drained loam"
+        }
+      ],
+      "crops": [
+        {
+          "variety_id": "CROP_005",
+          "variety_name": "Pepper Panniyur-1",
+          "category": "crops",
+          "suitability_score": 1.0,
+          "carbon_potential": 2.8,
+          "market_value": "Premium",
+          "confidence_level": 0.85,
+          "zones": [
+            "Zone_12_West_Coast"
+          ],
+          "climate_suitability": "Humid tropical",
+          "water_requirement": "High",
+          "soil_preference": "Lateritic"
+        },
+        {
+          "variety_id": "CROP_017",
+          "variety_name": "Crop 17",
+          "category": "crops",
+          "suitability_score": 1.0,
+          "carbon_potential": 2.4000000000000004,
+          "market_value": "Premium",
+          "confidence_level": 0.85,
+          "zones": [
+            "Zone_12_West_Coast"
+          ],
+          "climate_suitability": "Humid",
+          "water_requirement": "High",
+          "soil_preference": "Black cotton"
+        },
+        {
+          "variety_id": "CROP_032",
+          "variety_name": "Crop 32",
+          "category": "crops",
+          "suitability_score": 1.0,
+          "carbon_potential": 1.4,
+          "market_value": "Premium",
+          "confidence_level": 0.85,
+          "zones": [
+            "Zone_12_West_Coast"
+          ],
+          "climate_suitability": "Humid",
+          "water_requirement": "High",
+          "soil_preference": "Black cotton"
+        },
+        {
+          "variety_id": "CROP_014",
+          "variety_name": "Crop 14",
+          "category": "crops",
+          "suitability_score": 0.7,
+          "carbon_potential": 1.8,
+          "market_value": "Premium",
+          "confidence_level": 0.595,
+          "zones": [
+            "Zone_9_Western_Plateau"
+          ],
+          "climate_suitability": "Humid",
+          "water_requirement": "High",
+          "soil_preference": "Black cotton"
+        },
+        {
+          "variety_id": "CROP_026",
+          "variety_name": "Crop 26",
+          "category": "crops",
+          "suitability_score": 0.7,
+          "carbon_potential": 2.2,
+          "market_value": "Premium",
+          "confidence_level": 0.595,
+          "zones": [
+            "Zone_6_Trans_Gangetic"
+          ],
+          "climate_suitability": "Humid",
+          "water_requirement": "High",
+          "soil_preference": "Black cotton"
+        }
+      ],
+      "agroforestry": [
+        {
+          "variety_id": "AGRO_017",
+          "variety_name": "Tree Species 17",
+          "category": "agroforestry",
+          "suitability_score": 1.0,
+          "carbon_potential": 9.0,
+          "market_value": "Premium",
+          "confidence_level": 0.85,
+          "zones": [
+            "Zone_12_West_Coast"
+          ],
+          "climate_suitability": "Humid",
+          "water_requirement": "High",
+          "soil_preference": "Deep fertile"
+        },
+        {
+          "variety_id": "AGRO_032",
+          "variety_name": "Tree Species 32",
+          "category": "agroforestry",
+          "suitability_score": 1.0,
+          "carbon_potential": 12.0,
+          "market_value": "Premium",
+          "confidence_level": 0.85,
+          "zones": [
+            "Zone_12_West_Coast"
+          ],
+          "climate_suitability": "Humid",
+          "water_requirement": "High",
+          "soil_preference": "Deep fertile"
+        },
+        {
+          "variety_id": "AGRO_047",
+          "variety_name": "Tree Species 47",
+          "category": "agroforestry",
+          "suitability_score": 1.0,
+          "carbon_potential": 15.0,
+          "market_value": "Premium",
+          "confidence_level": 0.85,
+          "zones": [
+            "Zone_12_West_Coast"
+          ],
+          "climate_suitability": "Humid",
+          "water_requirement": "High",
+          "soil_preference": "Deep fertile"
+        },
+        {
+          "variety_id": "AGRO_004",
+          "variety_name": "Rubber",
+          "category": "agroforestry",
+          "suitability_score": 0.941,
+          "carbon_potential": 11.8,
+          "market_value": "High",
+          "confidence_level": 0.7999,
+          "zones": [
+            "Zone_12_West_Coast"
+          ],
+          "climate_suitability": "Humid tropical",
+          "water_requirement": "High",
+          "soil_preference": "Lateritic"
+        },
+        {
+          "variety_id": "AGRO_003",
+          "variety_name": "Sandalwood",
+          "category": "agroforestry",
+          "suitability_score": 0.8,
+          "carbon_potential": 8.8,
+          "market_value": "Premium",
+          "confidence_level": 0.68,
+          "zones": [
+            "Zone_10_Southern_Plateau"
+          ],
+          "climate_suitability": "Semi-arid",
+          "water_requirement": "Medium",
+          "soil_preference": "Red lateritic"
+        }
+      ]
+    },
+    "farming_scenario": {
+      "rice_coverage": "40%",
+      "primary_crop_coverage": "30%",
+      "secondary_crop_coverage": "20%",
+      "agroforestry_coverage": "10%"
+    },
+    "carbon_revenue": {
+      "realistic_carbon_potential_t_ha": 3.1,
+      "estimated_annual_credits": 2.63,
+      "estimated_revenue_inr": 65.88,
+      "income_analysis": {
+        "short_term_crops": "High-value crops like Pepper Panniyur-1 offer good short-term returns, but their carbon sequestration potential is moderate.  Diversification with other suitable crops is recommended to enhance overall income and carbon credits.",
+        "long_term_agroforestry": "Agroforestry, particularly with high carbon-sequestering species like Tree Species 47, offers substantial long-term revenue through carbon credits and timber sales.  This approach provides income stability over the long term.",
+        "investment_horizon_years": "A mixed approach is ideal, combining short-term crop profits with long-term agroforestry investments.  This strategy balances immediate needs with future sustainability and income security.",
+        "stability_over_10_years": "Agroforestry significantly enhances long-term income stability, reducing reliance on fluctuating crop prices.  A well-planned mix of crops and trees mitigates risks associated with climate change and market volatility.",
+        "recommendation_on_scaling": "Start with a smaller-scale agroforestry pilot project alongside existing crops to gain experience.  Based on the success of this pilot, gradually increase agroforestry coverage over the next 5-10 years, optimizing the balance between short-term and long-term revenue streams."
+      }
+    },
+    "zone_context": {
+      "description": "Zone 12, the West Coast of India, is characterized by a humid tropical climate, low elevation, and high rainfall.  The region is known for its lateritic soils and is well-suited for a range of crops, including rice, coconut, spices, and rubber.  The high rainfall can be beneficial, but it also presents challenges related to water management and soil erosion.",
+      "best_suited_crops": [
+        "Rice",
+        "Coconut",
+        "Spices",
+        "Rubber"
+      ],
+      "challenges": [
+        "Water management",
+        "Soil erosion",
+        "Pest and disease management",
+        "Market access"
+      ],
+      "opportunities": [
+        "High-value crop production",
+        "Agroforestry for carbon sequestration",
+        "Ecotourism",
+        "Organic farming"
+      ]
+    },
+    "risks": {
+      "climate": "The region is prone to monsoonal variability, which can impact crop yields.  Climate change may increase the frequency and intensity of extreme weather events.",
+      "soil": "Lateritic soils can be low in fertility and prone to erosion.  Careful soil management practices are crucial.",
+      "market": "Market prices for agricultural products can fluctuate.  Diversification and value addition can help mitigate these risks.",
+      "pest_disease": "High humidity and rainfall can favor the spread of pests and diseases.  Integrated pest management strategies are essential."
+    },
+    "actions": [
+      "Implement soil conservation measures to reduce erosion.",
+      "Diversify crops to reduce reliance on single commodities.",
+      "Invest in water management infrastructure.",
+      "Explore opportunities for value addition and market diversification."
+    ],
+    "future_outlook": {
+      "climate_resilience": "Adopting climate-smart agriculture practices, such as drought-resistant crop varieties and water-efficient irrigation techniques, will be crucial to ensure long-term resilience.",
+      "income_stability": "Integrating agroforestry into the farming system provides income diversification and long-term stability, mitigating risks associated with crop price volatility.",
+      "sustainability": "Sustainable farming practices, such as organic farming and integrated pest management, protect soil health and biodiversity, contributing to long-term sustainability.",
+      "carbon_farming_scalability": "Agroforestry presents a significant opportunity for scaling up carbon sequestration efforts, generating additional income streams and contributing to climate change mitigation."
+    },
+    "final_summary": "Farm F001 presents excellent potential for profitable and sustainable agriculture, leveraging the region's climate and soil conditions.  This report highlights the significant opportunities for carbon sequestration through agroforestry, which can substantially enhance long-term income stability.  The recommendations focus on a balanced approach, combining high-value short-term crops with long-term agroforestry investments, ensuring both immediate returns and future sustainability.  By implementing the suggested actions and adopting climate-smart practices, Farm F001 can achieve significant economic and environmental benefits, while contributing to a more resilient and sustainable agricultural system."
+  },
+  "visualization": {
+    "highlight": [
+      "High carbon sequestration potential",
+      "Suitable high-value crop options",
+      "Significant agroforestry opportunities",
+      "Long-term income stability"
+    ],
+    "chart_recommendations": {
+      "rainfall_distribution": [
+        "Monthly rainfall chart",
+        "Kharif vs. Rabi rainfall comparison",
+        "Recent rainfall trend analysis"
+      ],
+      "stress_indicators": [
+        "Heat stress days over time",
+        "Drought stress days over time",
+        "Vegetation health index"
+      ],
+      "soil_composition": [
+        "Soil texture pie chart",
+        "Soil nutrient levels bar chart",
+        "Soil organic carbon levels over time"
+      ],
+      "carbon_trends": [
+        "Projected carbon credits over time",
+        "Carbon revenue projections",
+        "Carbon sequestration potential of different crops"
+      ]
+    }
+  }
+}

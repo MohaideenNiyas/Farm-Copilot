@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgriSmart - Farm Recommendation System</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="flex items-center justify-between">
+                <div class="logo">
+                    <i class="fas fa-seedling"></i>
+                    <h1>AgriSmart</h1>
+                </div>
+                <nav class="nav">
+                    <span class="nav-subtitle">Intelligent Farm Recommendations</span>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Application -->
+    <main class="main">
+        <!-- Step 1: Farmer Details Form -->
+        <section id="farmer-form-section" class="section">
+            <div class="container">
+                <div class="form-container">
+                    <div class="form-header">
+                        <i class="fas fa-user-tie form-icon"></i>
+                        <h2>Farm Registration</h2>
+                        <p>Help us understand your farm to provide personalized recommendations</p>
+                    </div>
+
+                    <form id="farmer-form" class="farmer-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label" for="farm-id">Farm ID</label>
+                                <input type="text" id="farm-id" name="farm-id" class="form-control" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="farmer-id">Farmer ID</label>
+                                <input type="text" id="farmer-id" name="farmer-id" class="form-control" readonly>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="farmer-name">
+                                <i class="fas fa-user"></i>
+                                Farmer Name *
+                            </label>
+                            <input type="text" id="farmer-name" name="farmer-name" class="form-control" required>
+                        </div>
+
+                        <div class="location-section">
+                            <h3><i class="fas fa-map-marker-alt"></i> Location Details</h3>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label" for="latitude">Latitude *</label>
+                                    <input type="number" id="latitude" name="latitude" class="form-control" 
+                                           step="0.000001" min="-90" max="90" required>
+                                    <small class="form-help">Range: -90 to 90</small>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="longitude">Longitude *</label>
+                                    <input type="number" id="longitude" name="longitude" class="form-control" 
+                                           step="0.000001" min="-180" max="180" required>
+                                    <small class="form-help">Range: -180 to 180</small>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label" for="area">
+                                    <i class="fas fa-expand-arrows-alt"></i>
+                                    Area (Hectares) *
+                                </label>
+                                <input type="number" id="area" name="area" class="form-control" 
+                                       step="0.1" min="0.1" required>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label" for="village">Village *</label>
+                                    <input type="text" id="village" name="village" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="district">District *</label>
+                                    <input type="text" id="district" name="district" class="form-control" required>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label" for="state">State *</label>
+                                    <select id="state" name="state" class="form-control" required>
+                                        <option value="">Select State</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="main-crop">Main Crop *</label>
+                                    <select id="main-crop" name="main-crop" class="form-control" required>
+                                        <option value="">Select Main Crop</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn--primary btn--lg btn--full-width">
+                            <i class="fas fa-paper-plane"></i>
+                            Generate Recommendations
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Step 2: Processing Screen -->
+        <section id="processing-section" class="section hidden">
+            <div class="container">
+                <div class="processing-container">
+                    <div class="processing-header">
+                        <i class="fas fa-cogs processing-icon"></i>
+                        <h2>Analyzing Your Farm</h2>
+                        <p>We're processing your farm data to provide the best recommendations</p>
+                    </div>
+
+                    <div class="overall-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="overall-progress"></div>
+                        </div>
+                        <div class="progress-text">
+                            <span id="overall-percentage">0%</span>
+                            <span id="overall-status">Initializing...</span>
+                        </div>
+                    </div>
+
+                    <div class="processing-steps">
+                        <div class="step" id="step-1">
+                            <div class="step-icon">
+                                <i class="fas fa-database"></i>
+                                <i class="fas fa-check step-check hidden"></i>
+                                <div class="step-spinner hidden">
+                                    <i class="fas fa-spinner fa-spin"></i>
+                                </div>
+                            </div>
+                            <div class="step-content">
+                                <h4>Loading farm data...</h4>
+                                <p>Importing your farm information and validating inputs</p>
+                                <div class="step-progress">
+                                    <span class="step-status">Pending</span>
+                                    <span class="step-time">~10 seconds</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="step" id="step-2">
+                            <div class="step-icon">
+                                <i class="fas fa-cloud-rain"></i>
+                                <i class="fas fa-check step-check hidden"></i>
+                                <div class="step-spinner hidden">
+                                    <i class="fas fa-spinner fa-spin"></i>
+                                </div>
+                            </div>
+                            <div class="step-content">
+                                <h4>Fetching weather data...</h4>
+                                <p>Analyzing climate patterns and weather conditions for your location</p>
+                                <div class="step-progress">
+                                    <span class="step-status">Pending</span>
+                                    <span class="step-time">~15 seconds</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="step" id="step-3">
+                            <div class="step-icon">
+                                <i class="fas fa-mountain"></i>
+                                <i class="fas fa-check step-check hidden"></i>
+                                <div class="step-spinner hidden">
+                                    <i class="fas fa-spinner fa-spin"></i>
+                                </div>
+                            </div>
+                            <div class="step-content">
+                                <h4>Analyzing soil conditions...</h4>
+                                <p>Evaluating soil composition, pH levels, and fertility indicators</p>
+                                <div class="step-progress">
+                                    <span class="step-status">Pending</span>
+                                    <span class="step-time">~12 seconds</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="step" id="step-4">
+                            <div class="step-icon">
+                                <i class="fas fa-satellite"></i>
+                                <i class="fas fa-check step-check hidden"></i>
+                                <div class="step-spinner hidden">
+                                    <i class="fas fa-spinner fa-spin"></i>
+                                </div>
+                            </div>
+                            <div class="step-content">
+                                <h4>Processing satellite imagery...</h4>
+                                <p>Analyzing vegetation health and land use patterns</p>
+                                <div class="step-progress">
+                                    <span class="step-status">Pending</span>
+                                    <span class="step-time">~18 seconds</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="step" id="step-5">
+                            <div class="step-icon">
+                                <i class="fas fa-brain"></i>
+                                <i class="fas fa-check step-check hidden"></i>
+                                <div class="step-spinner hidden">
+                                    <i class="fas fa-spinner fa-spin"></i>
+                                </div>
+                            </div>
+                            <div class="step-content">
+                                <h4>Generating recommendations...</h4>
+                                <p>AI algorithms creating personalized crop and farming recommendations</p>
+                                <div class="step-progress">
+                                    <span class="step-status">Pending</span>
+                                    <span class="step-time">~20 seconds</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="step" id="step-6">
+                            <div class="step-icon">
+                                <i class="fas fa-file-alt"></i>
+                                <i class="fas fa-check step-check hidden"></i>
+                                <div class="step-spinner hidden">
+                                    <i class="fas fa-spinner fa-spin"></i>
+                                </div>
+                            </div>
+                            <div class="step-content">
+                                <h4>Creating detailed reports...</h4>
+                                <p>Compiling comprehensive analysis and actionable insights</p>
+                                <div class="step-progress">
+                                    <span class="step-status">Pending</span>
+                                    <span class="step-time">~8 seconds</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Step 3: Results Display -->
+        <section id="results-section" class="section hidden">
+            <div class="container">
+                <div class="results-header">
+                    <i class="fas fa-chart-line results-icon"></i>
+                    <h2>Farm Analysis Report</h2>
+                    <p>Your personalized agricultural recommendations are ready</p>
+                </div>
+
+                <div class="results-actions">
+                    <button class="btn btn--secondary" id="export-pdf">
+                        <i class="fas fa-file-pdf"></i>
+                        Export PDF
+                    </button>
+                    <button class="btn btn--outline" id="print-report">
+                        <i class="fas fa-print"></i>
+                        Print Report
+                    </button>
+                    <button class="btn btn--primary" id="new-analysis">
+                        <i class="fas fa-plus"></i>
+                        Start New Analysis
+                    </button>
+                </div>
+
+                <div class="results-grid" id="results-content">
+                    <!-- Results will be dynamically populated -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 AgriSmart - Empowering Farmers with Intelligent Recommendations</p>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
