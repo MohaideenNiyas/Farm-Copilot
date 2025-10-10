@@ -154,17 +154,44 @@ function Recommendations() {
       console.log("Successfully processed comprehensive report data");
       
     } else {
-      // Handle case where no report content is available
-      console.warn("No report content available");
+      // Handle case where no report content is available (direct navigation)
+      console.warn("No report content available - direct navigation detected");
       setFarmId("N/A");
-      setReportSummary("No recommendations found. Please submit your farm data first.");
+      setReportSummary("No analysis found. Please run a farm analysis first to get personalized recommendations.");
       setRecommendations({ rice_varieties: [], crops: [], agroforestry: [] });
-      setFarmingScenario(createDefaultFarmingScenario());
-      setCarbonRevenue(createDefaultCarbonRevenue());
-      setZoneContext(createDefaultZoneContext());
-      setRisks(createDefaultRisks());
-      setActions(createDefaultActions());
-      setFutureOutlook(createDefaultFutureOutlook());
+      setFarmingScenario({
+        scenario_type: "No Analysis Available",
+        description: "Please complete a farm analysis to see recommended farming scenarios tailored to your specific conditions.",
+        implementation_steps: [],
+        expected_benefits: []
+      });
+      setCarbonRevenue({
+        estimated_annual_credits: "N/A",
+        estimated_revenue: "N/A",
+        income_analysis: {
+          short_term_crops: "No data available - please run analysis",
+          long_term_agroforestry: "No data available - please run analysis",
+          investment_horizon_years: "No data available - please run analysis",
+          stability_over_10_years: "No data available - please run analysis",
+          recommendation_on_scaling: "No data available - please run analysis"
+        }
+      });
+      setZoneContext({
+        zone_name: "No Analysis Available",
+        description: "Please complete a farm analysis to see detailed agro-climatic zone information for your location.",
+        climate_characteristics: [],
+        best_suited_crops: []
+      });
+      setRisks({
+        climate_risks: [],
+        market_risks: []
+      });
+      setActions([]);
+      setFutureOutlook({
+        market_trends: "No data available - please run analysis",
+        climate_projections: "No data available - please run analysis",
+        technology_recommendations: "No data available - please run analysis"
+      });
       setVisualization({});
     }
   }, [rawReportContent]);
@@ -466,27 +493,36 @@ function Recommendations() {
   const renderRecommendationCard = (item, index, type) => {
     const getTypeColor = () => {
       switch (type) {
-        case 'rice': return 'var(--color-primary)';
-        case 'crops': return 'var(--color-warning)';
-        case 'agroforestry': return 'var(--color-success)';
-        default: return 'var(--color-info)';
+        case 'rice': return 'teal';
+        case 'crops': return 'amber';
+        case 'agroforestry': return 'green';
+        default: return 'slate';
       }
     };
 
+    const colorClasses = {
+      rice: 'border-l-teal-500 bg-teal-50',
+      crops: 'border-l-amber-500 bg-amber-50',
+      agroforestry: 'border-l-green-500 bg-green-50'
+    };
+
     return (
-      <div key={index} className="recommendation-card" style={{ '--accent-color': getTypeColor() }}>
-        <div className="rec-header">
-          <h3 className="rec-name">
+      <div key={index} className={`border-l-4 p-4 rounded-r-lg transition-all hover:shadow-md ${colorClasses[type] || 'border-l-slate-500 bg-slate-50'}`}>
+        <div className="mb-4">
+          <h3 className="text-lg font-semibold text-slate-900 mb-2">
             {item.variety_name || item.crop_name || item.tree_name || item.name || 'Unknown Item'}
           </h3>
-          <div className="rec-badges">
+          <div className="flex gap-2 flex-wrap">
             {item.suitability && (
-              <span className="suitability-badge" data-level={item.suitability?.toLowerCase()}>
+              <span className={`text-xs font-semibold px-2 py-1 rounded-full text-white ${
+                item.suitability === 'High' ? 'bg-green-500' :
+                item.suitability === 'Medium' ? 'bg-amber-500' : 'bg-red-500'
+              }`}>
                 {item.suitability} Suitability
               </span>
             )}
             {item.carbon_potential && (
-              <span className="carbon-badge">
+              <span className="bg-amber-100 text-amber-700 text-xs font-semibold px-2 py-1 rounded-full">
                 {item.carbon_potential} Carbon
               </span>
             )}
@@ -494,44 +530,45 @@ function Recommendations() {
         </div>
 
         {item.description && (
-          <p className="rec-description">{item.description}</p>
+          <p className="text-sm text-slate-700 leading-relaxed mb-4">{item.description}</p>
         )}
 
-        <div className="rec-details">
+        <div className="mb-4 space-y-2">
           {item.expected_yield && (
-            <div className="rec-detail-row">
-              <span className="detail-label">Expected Yield:</span>
-              <span className="detail-value">{item.expected_yield}</span>
+            <div className="flex justify-between items-center text-sm">
+              <span className="text-slate-600 font-medium">Expected Yield:</span>
+              <span className="text-slate-900 font-semibold">{item.expected_yield}</span>
             </div>
           )}
           {item.water_requirement && (
-            <div className="rec-detail-row">
-              <span className="detail-label">Water Requirement:</span>
-              <span className="detail-value">{item.water_requirement}</span>
+            <div className="flex justify-between items-center text-sm">
+              <span className="text-slate-600 font-medium">Water Requirement:</span>
+              <span className="text-slate-900 font-semibold">{item.water_requirement}</span>
             </div>
           )}
           {item.growth_duration && (
-            <div className="rec-detail-row">
-              <span className="detail-label">Growth Duration:</span>
-              <span className="detail-value">{item.growth_duration}</span>
+            <div className="flex justify-between items-center text-sm">
+              <span className="text-slate-600 font-medium">Growth Duration:</span>
+              <span className="text-slate-900 font-semibold">{item.growth_duration}</span>
             </div>
           )}
           {item.market_price && (
-            <div className="rec-detail-row">
-              <span className="detail-label">Market Price:</span>
-              <span className="detail-value">{item.market_price}</span>
+            <div className="flex justify-between items-center text-sm">
+              <span className="text-slate-600 font-medium">Market Price:</span>
+              <span className="text-slate-900 font-semibold">{item.market_price}</span>
             </div>
           )}
         </div>
 
         {item.confidence_score && (
-          <div className="confidence-section">
-            <div className="confidence-label">
-              Confidence: {Math.round(item.confidence_score * 100)}%
+          <div className="mb-4">
+            <div className="flex justify-between items-center text-sm mb-1">
+              <span className="text-slate-600 font-medium">Confidence:</span>
+              <span className="text-slate-900 font-semibold">{Math.round(item.confidence_score * 100)}%</span>
             </div>
-            <div className="confidence-bar">
-              <div 
-                className="confidence-fill" 
+            <div className="w-full bg-slate-200 rounded-full h-2">
+              <div
+                className="bg-teal-500 h-2 rounded-full transition-all duration-300"
                 style={{ width: `${item.confidence_score * 100}%` }}
               ></div>
             </div>
@@ -539,11 +576,14 @@ function Recommendations() {
         )}
 
         {item.key_benefits && item.key_benefits.length > 0 && (
-          <div className="rec-benefits">
-            <h4>Key Benefits:</h4>
-            <ul>
+          <div>
+            <h4 className="text-sm font-semibold text-slate-900 mb-2">Key Benefits:</h4>
+            <ul className="text-sm text-slate-700 space-y-1">
               {item.key_benefits.map((benefit, i) => (
-                <li key={i}>{benefit}</li>
+                <li key={i} className="flex items-start gap-2">
+                  <i className="fas fa-check text-green-500 text-xs mt-0.5 flex-shrink-0"></i>
+                  {benefit}
+                </li>
               ))}
             </ul>
           </div>
@@ -553,153 +593,156 @@ function Recommendations() {
   };
 
   return (
-    <div className="recommendations-container">
+    <div className="max-w-7xl mx-auto px-4 py-8">
       {/* Header Section */}
-      <div className="recommendations-header">
-        <div className="header-content">
-          <h1 className="page-title">
-            <i className="fas fa-chart-line title-icon"></i>
+      <div className="bg-white rounded-lg border border-slate-200 p-6 mb-8 shadow-sm flex justify-between items-start flex-wrap gap-4">
+        <div className="flex-1">
+          <h1 className="text-4xl font-bold text-slate-900 mb-4 flex items-center gap-2">
+            <i className="fas fa-chart-line text-teal-500"></i>
             Agricultural Recommendations
           </h1>
-          
-          <div className="farm-info-header">
+
+          <div className="flex flex-wrap gap-4">
             {farmId && farmId !== "N/A" && farmId !== "Error" && (
               <>
-                <div className="farm-id-display">
-                  <span className="farm-label">Farm ID:</span>
-                  <span className="farm-id-value">{farmId}</span>
+                <div className="flex items-center gap-2">
+                  <span className="text-sm text-slate-600 font-medium">Farm ID:</span>
+                  <span className="bg-slate-100 text-slate-900 text-base font-semibold px-3 py-1 rounded-md">{farmId}</span>
                 </div>
                 {farmDetails.farmer_name && (
-                  <div className="farmer-info">
-                    <span className="farmer-label">Farmer:</span>
-                    <span className="farmer-name">{farmDetails.farmer_name}</span>
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm text-slate-600 font-medium">Farmer:</span>
+                    <span className="bg-slate-100 text-slate-900 text-base font-semibold px-3 py-1 rounded-md">{farmDetails.farmer_name}</span>
                   </div>
                 )}
                 {farmDetails.village && farmDetails.district && (
-                  <div className="location-info">
-                    <span className="location-label">Location:</span>
-                    <span className="location-value">{farmDetails.village}, {farmDetails.district}</span>
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm text-slate-600 font-medium">Location:</span>
+                    <span className="bg-slate-100 text-slate-900 text-base font-semibold px-3 py-1 rounded-md">{farmDetails.village}, {farmDetails.district}</span>
                   </div>
                 )}
               </>
             )}
           </div>
         </div>
-        
-        <button onClick={handleNewAnalysis} className="new-analysis-btn">
+
+        <button onClick={handleNewAnalysis} className="inline-flex items-center gap-2 px-4 py-2 bg-teal-500 text-white border border-teal-500 rounded-md hover:bg-teal-600 transition-all">
           <i className="fas fa-plus"></i>
           New Analysis
         </button>
       </div>
 
       {/* Summary Section */}
-      <div className="summary-section">
-        <h2><i className="fas fa-file-alt"></i> Executive Summary</h2>
-        <p className="summary-text">{reportSummary}</p>
+      <div className="bg-white rounded-lg border border-slate-200 p-6 mb-8 shadow-sm">
+        <h2 className="text-2xl font-semibold text-slate-900 mb-4 flex items-center gap-2">
+          <i className="fas fa-file-alt text-teal-500"></i>
+          Executive Summary
+        </h2>
+        <p className="text-base text-slate-700 leading-relaxed">{reportSummary}</p>
       </div>
 
       {/* Quick Stats */}
       {farmDetails && Object.keys(farmDetails).length > 0 && (
-        <div className="quick-stats">
-          <div className="stat-item">
-            <i className="fas fa-map-marker-alt stat-icon"></i>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+          <div className="bg-white rounded-lg border border-slate-200 p-4 shadow-sm flex items-center gap-3">
+            <i className="fas fa-map-marker-alt text-teal-500 text-2xl"></i>
             <div>
-              <div className="stat-value">{farmDetails.area || "N/A"}</div>
-              <div className="stat-label">Hectares</div>
+              <div className="text-xl font-bold text-slate-900">{farmDetails.area || "N/A"}</div>
+              <div className="text-xs text-slate-600 uppercase tracking-wide font-medium">Hectares</div>
             </div>
           </div>
-          <div className="stat-item">
-            <i className="fas fa-seedling stat-icon"></i>
+          <div className="bg-white rounded-lg border border-slate-200 p-4 shadow-sm flex items-center gap-3">
+            <i className="fas fa-seedling text-teal-500 text-2xl"></i>
             <div>
-              <div className="stat-value">{farmDetails.main_crop || "N/A"}</div>
-              <div className="stat-label">Main Crop</div>
+              <div className="text-xl font-bold text-slate-900">{farmDetails.main_crop || "N/A"}</div>
+              <div className="text-xs text-slate-600 uppercase tracking-wide font-medium">Main Crop</div>
             </div>
           </div>
-          <div className="stat-item">
-            <i className="fas fa-chart-bar stat-icon"></i>
+          <div className="bg-white rounded-lg border border-slate-200 p-4 shadow-sm flex items-center gap-3">
+            <i className="fas fa-chart-bar text-teal-500 text-2xl"></i>
             <div>
-              <div className="stat-value">{farmDetails.reports_count || 0}</div>
-              <div className="stat-label">Total Reports</div>
+              <div className="text-xl font-bold text-slate-900">{farmDetails.reports_count || 0}</div>
+              <div className="text-xs text-slate-600 uppercase tracking-wide font-medium">Total Reports</div>
             </div>
           </div>
-          <div className="stat-item">
-            <i className="fas fa-calendar stat-icon"></i>
+          <div className="bg-white rounded-lg border border-slate-200 p-4 shadow-sm flex items-center gap-3">
+            <i className="fas fa-calendar text-teal-500 text-2xl"></i>
             <div>
-              <div className="stat-value">
+              <div className="text-xl font-bold text-slate-900">
                 {farmDetails.latest_analysis ? new Date(farmDetails.latest_analysis).toLocaleDateString() : "None"}
               </div>
-              <div className="stat-label">Last Analysis</div>
+              <div className="text-xs text-slate-600 uppercase tracking-wide font-medium">Last Analysis</div>
             </div>
           </div>
         </div>
       )}
 
       {/* Recommendations Grid */}
-      <div className="recommendations-grid">
+      <div className="grid gap-6 mb-8">
         {/* Rice Varieties Section */}
-        <div className="recommendation-section">
-          <div className="section-header">
-            <h2 className="section-title">
-              <i className="fas fa-seedling"></i>
+        <div className="bg-white rounded-lg border border-slate-200 p-6 shadow-sm">
+          <div className="mb-4 pb-4 border-b border-slate-200">
+            <h2 className="text-2xl font-semibold text-slate-900 flex items-center gap-2">
+              <i className="fas fa-seedling text-teal-500"></i>
               Recommended Rice Varieties
-              <span className="count-badge">{recommendations.rice_varieties.length}</span>
+              <span className="bg-slate-100 text-teal-600 text-sm font-semibold px-2 py-1 rounded-full">{recommendations.rice_varieties.length}</span>
             </h2>
           </div>
-          <div className="recommendations-list">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {recommendations.rice_varieties.length > 0 ? (
-              recommendations.rice_varieties.map((item, index) => 
+              recommendations.rice_varieties.map((item, index) =>
                 renderRecommendationCard(item, index, 'rice')
               )
             ) : (
-              <div className="no-recommendations">
-                <i className="fas fa-search no-rec-icon"></i>
-                <p>No specific rice variety recommendations found.</p>
+              <div className="text-center py-8 col-span-full">
+                <i className="fas fa-search text-4xl text-slate-400 mb-4"></i>
+                <p className="text-slate-600">No specific rice variety recommendations found.</p>
               </div>
             )}
           </div>
         </div>
 
         {/* Crops Section */}
-        <div className="recommendation-section">
-          <div className="section-header">
-            <h2 className="section-title">
-              <i className="fas fa-leaf"></i>
+        <div className="bg-white rounded-lg border border-slate-200 p-6 shadow-sm">
+          <div className="mb-4 pb-4 border-b border-slate-200">
+            <h2 className="text-2xl font-semibold text-slate-900 flex items-center gap-2">
+              <i className="fas fa-leaf text-teal-500"></i>
               Recommended Crops
-              <span className="count-badge">{recommendations.crops.length}</span>
+              <span className="bg-slate-100 text-teal-600 text-sm font-semibold px-2 py-1 rounded-full">{recommendations.crops.length}</span>
             </h2>
           </div>
-          <div className="recommendations-list">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {recommendations.crops.length > 0 ? (
-              recommendations.crops.map((item, index) => 
+              recommendations.crops.map((item, index) =>
                 renderRecommendationCard(item, index, 'crops')
               )
             ) : (
-              <div className="no-recommendations">
-                <i className="fas fa-search no-rec-icon"></i>
-                <p>No specific crop recommendations found.</p>
+              <div className="text-center py-8 col-span-full">
+                <i className="fas fa-search text-4xl text-slate-400 mb-4"></i>
+                <p className="text-slate-600">No specific crop recommendations found.</p>
               </div>
             )}
           </div>
         </div>
 
         {/* Agroforestry Section */}
-        <div className="recommendation-section">
-          <div className="section-header">
-            <h2 className="section-title">
-              <i className="fas fa-tree"></i>
+        <div className="bg-white rounded-lg border border-slate-200 p-6 shadow-sm">
+          <div className="mb-4 pb-4 border-b border-slate-200">
+            <h2 className="text-2xl font-semibold text-slate-900 flex items-center gap-2">
+              <i className="fas fa-tree text-teal-500"></i>
               Recommended Trees (Agroforestry)
-              <span className="count-badge">{recommendations.agroforestry.length}</span>
+              <span className="bg-slate-100 text-teal-600 text-sm font-semibold px-2 py-1 rounded-full">{recommendations.agroforestry.length}</span>
             </h2>
           </div>
-          <div className="recommendations-list">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {recommendations.agroforestry.length > 0 ? (
-              recommendations.agroforestry.map((item, index) => 
+              recommendations.agroforestry.map((item, index) =>
                 renderRecommendationCard(item, index, 'agroforestry')
               )
             ) : (
-              <div className="no-recommendations">
-                <i className="fas fa-search no-rec-icon"></i>
-                <p>No specific agroforestry recommendations found.</p>
+              <div className="text-center py-8 col-span-full">
+                <i className="fas fa-search text-4xl text-slate-400 mb-4"></i>
+                <p className="text-slate-600">No specific agroforestry recommendations found.</p>
               </div>
             )}
           </div>
@@ -708,42 +751,48 @@ function Recommendations() {
 
       {/* Farming Scenario Section */}
       {farmingScenario && Object.keys(farmingScenario).length > 0 && (
-        <div className="farming-scenario-section">
-          <div className="section-header">
-            <h2 className="section-title">
-              <i className="fas fa-tractor"></i>
+        <div className="bg-white rounded-lg border border-slate-200 p-6 mb-8 shadow-sm">
+          <div className="mb-4 pb-4 border-b border-slate-200">
+            <h2 className="text-2xl font-semibold text-slate-900 flex items-center gap-2">
+              <i className="fas fa-tractor text-teal-500"></i>
               Recommended Farming Scenario
             </h2>
           </div>
-          <div className="farming-scenario-card">
-            <div className="scenario-header">
-              <h3 className="scenario-type">{farmingScenario.scenario_type}</h3>
+          <div className="bg-slate-50 rounded-lg p-6">
+            <div className="mb-4">
+              <h3 className="text-xl font-bold text-teal-600 mb-4">{farmingScenario.scenario_type}</h3>
             </div>
-            <div className="scenario-content">
-              <p className="scenario-description">{farmingScenario.description}</p>
-              
+            <div className="grid gap-6">
+              <p className="text-base text-slate-700 leading-relaxed">{farmingScenario.description}</p>
+
               {farmingScenario.implementation_steps && farmingScenario.implementation_steps.length > 0 && (
-                <div className="implementation-section">
-                  <h4><i className="fas fa-tasks"></i> Implementation Steps</h4>
-                  <ol className="implementation-steps">
+                <div>
+                  <h4 className="text-lg font-semibold text-slate-900 mb-3 flex items-center gap-2">
+                    <i className="fas fa-tasks text-teal-500"></i>
+                    Implementation Steps
+                  </h4>
+                  <ol className="space-y-2">
                     {farmingScenario.implementation_steps.map((step, index) => (
-                      <li key={index} className="step-item">
-                        <span className="step-number">{index + 1}</span>
-                        <span className="step-text">{step}</span>
+                      <li key={index} className="flex items-start gap-3">
+                        <span className="bg-teal-500 text-white w-6 h-6 rounded-full text-sm font-semibold flex items-center justify-center flex-shrink-0 mt-0.5">{index + 1}</span>
+                        <span className="text-slate-700">{step}</span>
                       </li>
                     ))}
                   </ol>
                 </div>
               )}
-              
+
               {farmingScenario.expected_benefits && farmingScenario.expected_benefits.length > 0 && (
-                <div className="benefits-section">
-                  <h4><i className="fas fa-check-circle"></i> Expected Benefits</h4>
-                  <ul className="benefits-list">
+                <div>
+                  <h4 className="text-lg font-semibold text-slate-900 mb-3 flex items-center gap-2">
+                    <i className="fas fa-check-circle text-green-500"></i>
+                    Expected Benefits
+                  </h4>
+                  <ul className="space-y-2">
                     {farmingScenario.expected_benefits.map((benefit, index) => (
-                      <li key={index} className="benefit-item">
-                        <i className="fas fa-arrow-right"></i>
-                        {benefit}
+                      <li key={index} className="flex items-start gap-2">
+                        <i className="fas fa-arrow-right text-green-500 text-sm mt-0.5"></i>
+                        <span className="text-slate-700">{benefit}</span>
                       </li>
                     ))}
                   </ul>
@@ -756,58 +805,61 @@ function Recommendations() {
 
       {/* Carbon Revenue Section */}
       {carbonRevenue && Object.keys(carbonRevenue).length > 0 && (
-        <div className="carbon-revenue-section">
-          <div className="section-header">
-            <h2 className="section-title">
-              <i className="fas fa-leaf"></i>
+        <div className="bg-white rounded-lg border border-slate-200 p-6 mb-8 shadow-sm">
+          <div className="mb-4 pb-4 border-b border-slate-200">
+            <h2 className="text-2xl font-semibold text-slate-900 flex items-center gap-2">
+              <i className="fas fa-leaf text-green-500"></i>
               Carbon Revenue Analysis
             </h2>
           </div>
-          <div className="carbon-revenue-content">
-            <div className="carbon-stats-grid">
-              <div className="carbon-stat-card">
-                <div className="stat-icon-wrapper">
+          <div className="grid gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="bg-green-50 border border-green-200 rounded-lg p-4 flex items-center gap-3">
+                <div className="bg-green-500 text-white w-10 h-10 rounded-lg flex items-center justify-center">
                   <i className="fas fa-seedling"></i>
                 </div>
-                <div className="stat-content">
-                  <div className="stat-value">{carbonRevenue.estimated_annual_credits || "N/A"}</div>
-                  <div className="stat-label">Annual Carbon Credits (tons)</div>
+                <div>
+                  <div className="text-xl font-bold text-green-600">{carbonRevenue.estimated_annual_credits || "N/A"}</div>
+                  <div className="text-xs text-green-600 uppercase tracking-wide font-medium">Annual Carbon Credits (tons)</div>
                 </div>
               </div>
-              <div className="carbon-stat-card">
-                <div className="stat-icon-wrapper">
+              <div className="bg-green-50 border border-green-200 rounded-lg p-4 flex items-center gap-3">
+                <div className="bg-green-500 text-white w-10 h-10 rounded-lg flex items-center justify-center">
                   <i className="fas fa-dollar-sign"></i>
                 </div>
-                <div className="stat-content">
-                  <div className="stat-value">₹{carbonRevenue.estimated_revenue || "N/A"}</div>
-                  <div className="stat-label">Estimated Annual Revenue</div>
+                <div>
+                  <div className="text-xl font-bold text-green-600">₹{carbonRevenue.estimated_revenue || "N/A"}</div>
+                  <div className="text-xs text-green-600 uppercase tracking-wide font-medium">Estimated Annual Revenue</div>
                 </div>
               </div>
             </div>
 
             {carbonRevenue.income_analysis && (
-              <div className="income-analysis-section">
-                <h3><i className="fas fa-chart-line"></i> Income Analysis</h3>
-                <div className="income-analysis-grid">
-                  <div className="analysis-item">
-                    <h4>Short-term Crops</h4>
-                    <p>{carbonRevenue.income_analysis.short_term_crops}</p>
+              <div>
+                <h3 className="text-lg font-semibold text-slate-900 mb-4 flex items-center gap-2">
+                  <i className="fas fa-chart-line text-teal-500"></i>
+                  Income Analysis
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="bg-slate-50 rounded-lg p-4">
+                    <h4 className="font-semibold text-slate-900 mb-2">Short-term Crops</h4>
+                    <p className="text-sm text-slate-700">{carbonRevenue.income_analysis.short_term_crops}</p>
                   </div>
-                  <div className="analysis-item">
-                    <h4>Long-term Agroforestry</h4>
-                    <p>{carbonRevenue.income_analysis.long_term_agroforestry}</p>
+                  <div className="bg-slate-50 rounded-lg p-4">
+                    <h4 className="font-semibold text-slate-900 mb-2">Long-term Agroforestry</h4>
+                    <p className="text-sm text-slate-700">{carbonRevenue.income_analysis.long_term_agroforestry}</p>
                   </div>
-                  <div className="analysis-item">
-                    <h4>Investment Horizon</h4>
-                    <p>{carbonRevenue.income_analysis.investment_horizon_years}</p>
+                  <div className="bg-slate-50 rounded-lg p-4">
+                    <h4 className="font-semibold text-slate-900 mb-2">Investment Horizon</h4>
+                    <p className="text-sm text-slate-700">{carbonRevenue.income_analysis.investment_horizon_years}</p>
                   </div>
-                  <div className="analysis-item">
-                    <h4>Long-term Stability</h4>
-                    <p>{carbonRevenue.income_analysis.stability_over_10_years}</p>
+                  <div className="bg-slate-50 rounded-lg p-4">
+                    <h4 className="font-semibold text-slate-900 mb-2">Long-term Stability</h4>
+                    <p className="text-sm text-slate-700">{carbonRevenue.income_analysis.stability_over_10_years}</p>
                   </div>
-                  <div className="analysis-item analysis-full-width">
-                    <h4>Scaling Recommendation</h4>
-                    <p>{carbonRevenue.income_analysis.recommendation_on_scaling}</p>
+                  <div className="bg-slate-50 rounded-lg p-4 md:col-span-2">
+                    <h4 className="font-semibold text-slate-900 mb-2">Scaling Recommendation</h4>
+                    <p className="text-sm text-slate-700">{carbonRevenue.income_analysis.recommendation_on_scaling}</p>
                   </div>
                 </div>
               </div>
@@ -818,40 +870,46 @@ function Recommendations() {
 
       {/* Zone Context Section */}
       {zoneContext && Object.keys(zoneContext).length > 0 && (
-        <div className="zone-context-section">
-          <div className="section-header">
-            <h2 className="section-title">
-              <i className="fas fa-map"></i>
+        <div className="bg-white rounded-lg border border-slate-200 p-6 mb-8 shadow-sm">
+          <div className="mb-4 pb-4 border-b border-slate-200">
+            <h2 className="text-2xl font-semibold text-slate-900 flex items-center gap-2">
+              <i className="fas fa-map text-teal-500"></i>
               Agro-Climatic Zone Context
             </h2>
           </div>
-          <div className="zone-context-card">
-            <div className="zone-header">
-              <h3>{zoneContext.zone_name}</h3>
+          <div className="bg-gradient-to-r from-teal-50 to-green-50 rounded-lg p-6">
+            <div className="mb-4">
+              <h3 className="text-xl font-bold text-teal-600 mb-4">{zoneContext.zone_name}</h3>
             </div>
-            <div className="zone-content">
-              <p className="zone-description">{zoneContext.description}</p>
-              
+            <div className="grid gap-6">
+              <p className="text-base text-slate-700 leading-relaxed">{zoneContext.description}</p>
+
               {zoneContext.climate_characteristics && zoneContext.climate_characteristics.length > 0 && (
-                <div className="climate-characteristics">
-                  <h4><i className="fas fa-thermometer-half"></i> Climate Characteristics</h4>
-                  <div className="characteristics-grid">
+                <div>
+                  <h4 className="text-lg font-semibold text-slate-900 mb-3 flex items-center gap-2">
+                    <i className="fas fa-thermometer-half text-teal-500"></i>
+                    Climate Characteristics
+                  </h4>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                     {zoneContext.climate_characteristics.map((char, index) => (
-                      <div key={index} className="characteristic-item">
-                        <span className="char-label">{char.label}:</span>
-                        <span className="char-value">{char.value}</span>
+                      <div key={index} className="flex justify-between items-center bg-white rounded-md p-3 border border-slate-200">
+                        <span className="text-slate-600 font-medium">{char.label}:</span>
+                        <span className="text-slate-900 font-semibold">{char.value}</span>
                       </div>
                     ))}
                   </div>
                 </div>
               )}
-              
+
               {zoneContext.best_suited_crops && zoneContext.best_suited_crops.length > 0 && (
-                <div className="suited-crops">
-                  <h4><i className="fas fa-seedling"></i> Best Suited Crops</h4>
-                  <div className="crops-tags">
+                <div>
+                  <h4 className="text-lg font-semibold text-slate-900 mb-3 flex items-center gap-2">
+                    <i className="fas fa-seedling text-green-500"></i>
+                    Best Suited Crops
+                  </h4>
+                  <div className="flex flex-wrap gap-2">
                     {zoneContext.best_suited_crops.map((crop, index) => (
-                      <span key={index} className="crop-tag">{crop}</span>
+                      <span key={index} className="bg-green-100 text-green-700 text-sm font-medium px-3 py-1 rounded-full">{crop}</span>
                     ))}
                   </div>
                 </div>
@@ -863,37 +921,46 @@ function Recommendations() {
 
       {/* Risk Assessment Section */}
       {risks && (Object.keys(risks).length > 0) && (
-        <div className="risks-section">
-          <div className="section-header">
-            <h2 className="section-title">
-              <i className="fas fa-exclamation-triangle"></i>
+        <div className="bg-white rounded-lg border border-slate-200 p-6 mb-8 shadow-sm">
+          <div className="mb-4 pb-4 border-b border-slate-200">
+            <h2 className="text-2xl font-semibold text-slate-900 flex items-center gap-2">
+              <i className="fas fa-exclamation-triangle text-amber-500"></i>
               Risk Assessment
             </h2>
           </div>
-          <div className="risks-content">
+          <div className="grid gap-6">
             {risks.climate_risks && risks.climate_risks.length > 0 && (
-              <div className="risk-category">
-                <h3><i className="fas fa-cloud-rain"></i> Climate Risks</h3>
-                <div className="risks-grid">
+              <div>
+                <h3 className="text-lg font-semibold text-slate-900 mb-4 flex items-center gap-2">
+                  <i className="fas fa-cloud-rain text-blue-500"></i>
+                  Climate Risks
+                </h3>
+                <div className="grid gap-4">
                   {risks.climate_risks.map((risk, index) => (
-                    <div key={index} className="risk-card" data-severity={risk.severity?.toLowerCase()}>
-                      <div className="risk-header">
-                        <h4>{risk.risk_type}</h4>
-                        <span className="severity-badge" data-level={risk.severity?.toLowerCase()}>
+                    <div key={index} className="bg-amber-50 border border-amber-200 rounded-lg p-4 border-l-4 border-l-amber-500">
+                      <div className="flex justify-between items-start mb-3 flex-wrap gap-2">
+                        <h4 className="font-semibold text-slate-900">{risk.risk_type}</h4>
+                        <span className={`text-xs font-semibold px-2 py-1 rounded-full text-white ${
+                          risk.severity === 'High' ? 'bg-red-500' :
+                          risk.severity === 'Medium' ? 'bg-amber-500' : 'bg-green-500'
+                        }`}>
                           {risk.severity}
                         </span>
                       </div>
-                      <div className="risk-details">
-                        <div className="probability">
-                          <span>Probability: {risk.probability}</span>
+                      <div className="space-y-2">
+                        <div className="text-sm text-slate-600">
+                          <span className="font-medium">Probability:</span> {risk.probability}
                         </div>
-                        <p className="risk-description">{risk.description}</p>
+                        <p className="text-sm text-slate-700">{risk.description}</p>
                         {risk.mitigation_strategies && risk.mitigation_strategies.length > 0 && (
-                          <div className="mitigation-strategies">
-                            <h5>Mitigation Strategies:</h5>
-                            <ul>
+                          <div className="bg-green-50 rounded-md p-3">
+                            <h5 className="text-sm font-semibold text-green-700 mb-2">Mitigation Strategies:</h5>
+                            <ul className="text-sm text-green-700 space-y-1">
                               {risk.mitigation_strategies.map((strategy, i) => (
-                                <li key={i}>{strategy}</li>
+                                <li key={i} className="flex items-start gap-2">
+                                  <i className="fas fa-arrow-right text-green-500 text-xs mt-0.5"></i>
+                                  {strategy}
+                                </li>
                               ))}
                             </ul>
                           </div>
@@ -906,28 +973,37 @@ function Recommendations() {
             )}
 
             {risks.market_risks && risks.market_risks.length > 0 && (
-              <div className="risk-category">
-                <h3><i className="fas fa-chart-line"></i> Market Risks</h3>
-                <div className="risks-grid">
+              <div>
+                <h3 className="text-lg font-semibold text-slate-900 mb-4 flex items-center gap-2">
+                  <i className="fas fa-chart-line text-purple-500"></i>
+                  Market Risks
+                </h3>
+                <div className="grid gap-4">
                   {risks.market_risks.map((risk, index) => (
-                    <div key={index} className="risk-card" data-severity={risk.severity?.toLowerCase()}>
-                      <div className="risk-header">
-                        <h4>{risk.risk_type}</h4>
-                        <span className="severity-badge" data-level={risk.severity?.toLowerCase()}>
+                    <div key={index} className="bg-amber-50 border border-amber-200 rounded-lg p-4 border-l-4 border-l-amber-500">
+                      <div className="flex justify-between items-start mb-3 flex-wrap gap-2">
+                        <h4 className="font-semibold text-slate-900">{risk.risk_type}</h4>
+                        <span className={`text-xs font-semibold px-2 py-1 rounded-full text-white ${
+                          risk.severity === 'High' ? 'bg-red-500' :
+                          risk.severity === 'Medium' ? 'bg-amber-500' : 'bg-green-500'
+                        }`}>
                           {risk.severity}
                         </span>
                       </div>
-                      <div className="risk-details">
-                        <div className="probability">
-                          <span>Probability: {risk.probability}</span>
+                      <div className="space-y-2">
+                        <div className="text-sm text-slate-600">
+                          <span className="font-medium">Probability:</span> {risk.probability}
                         </div>
-                        <p className="risk-description">{risk.description}</p>
+                        <p className="text-sm text-slate-700">{risk.description}</p>
                         {risk.mitigation_strategies && risk.mitigation_strategies.length > 0 && (
-                          <div className="mitigation-strategies">
-                            <h5>Mitigation Strategies:</h5>
-                            <ul>
+                          <div className="bg-green-50 rounded-md p-3">
+                            <h5 className="text-sm font-semibold text-green-700 mb-2">Mitigation Strategies:</h5>
+                            <ul className="text-sm text-green-700 space-y-1">
                               {risk.mitigation_strategies.map((strategy, i) => (
-                                <li key={i}>{strategy}</li>
+                                <li key={i} className="flex items-start gap-2">
+                                  <i className="fas fa-arrow-right text-green-500 text-xs mt-0.5"></i>
+                                  {strategy}
+                                </li>
                               ))}
                             </ul>
                           </div>
@@ -944,36 +1020,42 @@ function Recommendations() {
 
       {/* Action Items Section */}
       {actions && actions.length > 0 && (
-        <div className="actions-section">
-          <div className="section-header">
-            <h2 className="section-title">
-              <i className="fas fa-tasks"></i>
+        <div className="bg-white rounded-lg border border-slate-200 p-6 mb-8 shadow-sm">
+          <div className="mb-4 pb-4 border-b border-slate-200">
+            <h2 className="text-2xl font-semibold text-slate-900 flex items-center gap-2">
+              <i className="fas fa-tasks text-blue-500"></i>
               Action Items
-              <span className="count-badge">{actions.length}</span>
+              <span className="bg-slate-100 text-teal-600 text-sm font-semibold px-2 py-1 rounded-full">{actions.length}</span>
             </h2>
           </div>
-          <div className="actions-grid">
+          <div className="grid gap-4">
             {actions.map((action, index) => (
-              <div key={index} className="action-card">
-                <div className="action-header">
-                  <h3>{action.title}</h3>
-                  <div className="action-badges">
-                    <span className="priority-badge" data-priority={action.priority?.toLowerCase()}>
+              <div key={index} className="bg-slate-50 border border-slate-200 rounded-lg p-4 border-l-4 border-l-blue-500">
+                <div className="flex justify-between items-start mb-3 flex-wrap gap-2">
+                  <h3 className="font-semibold text-slate-900">{action.title}</h3>
+                  <div className="flex gap-2">
+                    <span className={`text-xs font-semibold px-2 py-1 rounded-full text-white ${
+                      action.priority === 'High' ? 'bg-red-500' :
+                      action.priority === 'Medium' ? 'bg-amber-500' : 'bg-green-500'
+                    }`}>
                       {action.priority}
                     </span>
-                    <span className="timeline-badge">
+                    <span className="bg-blue-100 text-blue-700 text-xs font-semibold px-2 py-1 rounded-full">
                       {action.timeline}
                     </span>
                   </div>
                 </div>
-                <div className="action-content">
-                  <p className="action-description">{action.description}</p>
+                <div className="space-y-3">
+                  <p className="text-sm text-slate-700">{action.description}</p>
                   {action.steps && action.steps.length > 0 && (
-                    <div className="action-steps">
-                      <h4>Steps:</h4>
-                      <ol>
+                    <div>
+                      <h4 className="text-sm font-semibold text-slate-900 mb-2">Steps:</h4>
+                      <ol className="text-sm text-slate-700 space-y-1">
                         {action.steps.map((step, i) => (
-                          <li key={i}>{step}</li>
+                          <li key={i} className="flex items-start gap-2">
+                            <span className="bg-blue-500 text-white w-4 h-4 rounded-full text-xs font-semibold flex items-center justify-center flex-shrink-0 mt-0.5">{i + 1}</span>
+                            {step}
+                          </li>
                         ))}
                       </ol>
                     </div>
@@ -987,45 +1069,45 @@ function Recommendations() {
 
       {/* Future Outlook Section */}
       {futureOutlook && Object.keys(futureOutlook).length > 0 && (
-        <div className="future-outlook-section">
-          <div className="section-header">
-            <h2 className="section-title">
-              <i className="fas fa-crystal-ball"></i>
+        <div className="bg-white rounded-lg border border-slate-200 p-6 mb-8 shadow-sm">
+          <div className="mb-4 pb-4 border-b border-slate-200">
+            <h2 className="text-2xl font-semibold text-slate-900 flex items-center gap-2">
+              <i className="fas fa-crystal-ball text-purple-500"></i>
               Future Outlook
             </h2>
           </div>
-          <div className="outlook-content">
-            <div className="outlook-grid">
+          <div className="grid gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {futureOutlook.market_trends && (
-                <div className="outlook-card">
-                  <div className="outlook-icon">
+                <div className="bg-slate-50 rounded-lg p-4">
+                  <div className="bg-purple-500 text-white w-10 h-10 rounded-lg flex items-center justify-center mb-3">
                     <i className="fas fa-chart-line"></i>
                   </div>
-                  <div className="outlook-details">
-                    <h3>Market Trends</h3>
-                    <p>{futureOutlook.market_trends}</p>
+                  <div>
+                    <h3 className="font-semibold text-slate-900 mb-2">Market Trends</h3>
+                    <p className="text-sm text-slate-700">{futureOutlook.market_trends}</p>
                   </div>
                 </div>
               )}
               {futureOutlook.climate_projections && (
-                <div className="outlook-card">
-                  <div className="outlook-icon">
+                <div className="bg-slate-50 rounded-lg p-4">
+                  <div className="bg-purple-500 text-white w-10 h-10 rounded-lg flex items-center justify-center mb-3">
                     <i className="fas fa-cloud-sun"></i>
                   </div>
-                  <div className="outlook-details">
-                    <h3>Climate Projections</h3>
-                    <p>{futureOutlook.climate_projections}</p>
+                  <div>
+                    <h3 className="font-semibold text-slate-900 mb-2">Climate Projections</h3>
+                    <p className="text-sm text-slate-700">{futureOutlook.climate_projections}</p>
                   </div>
                 </div>
               )}
               {futureOutlook.technology_recommendations && (
-                <div className="outlook-card">
-                  <div className="outlook-icon">
+                <div className="bg-slate-50 rounded-lg p-4">
+                  <div className="bg-purple-500 text-white w-10 h-10 rounded-lg flex items-center justify-center mb-3">
                     <i className="fas fa-robot"></i>
                   </div>
-                  <div className="outlook-details">
-                    <h3>Technology Recommendations</h3>
-                    <p>{futureOutlook.technology_recommendations}</p>
+                  <div>
+                    <h3 className="font-semibold text-slate-900 mb-2">Technology Recommendations</h3>
+                    <p className="text-sm text-slate-700">{futureOutlook.technology_recommendations}</p>
                   </div>
                 </div>
               )}
@@ -1035,10 +1117,10 @@ function Recommendations() {
       )}
 
       {loading && (
-        <div className="loading-overlay">
-          <div className="loading-container">
-            <div className="loading-spinner"></div>
-            <p>Loading farm details...</p>
+        <div className="fixed inset-0 bg-white bg-opacity-80 backdrop-blur-sm flex items-center justify-center z-50">
+          <div className="flex flex-col items-center">
+            <div className="w-10 h-10 border-4 border-slate-200 border-t-teal-500 rounded-full animate-spin mb-4"></div>
+            <p className="text-slate-600">Loading farm details...</p>
           </div>
         </div>
       )}

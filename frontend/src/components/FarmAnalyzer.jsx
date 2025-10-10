@@ -233,28 +233,28 @@ function FarmAnalyzer() {
   }
 
   return (
-    <div className="farm-analyzer-container">
+    <div className="max-w-5xl mx-auto px-4 py-8">
       {/* Header Section */}
-      <div className="analyzer-header">
-        <div className="header-content">
-          <h1 className="page-title">
-            <span className="title-icon">🔬</span>
+      <div className="bg-white rounded-lg border border-slate-200 p-6 mb-8 shadow-sm flex justify-between items-start flex-wrap gap-4">
+        <div className="flex-1">
+          <h1 className="text-4xl font-bold text-slate-900 mb-4 flex items-center gap-2">
+            <span className="text-2xl">🔬</span>
             {editFarm ? 'Edit Farm Details' : 'Farm Analysis'}
           </h1>
-          <p className="page-description">
-            {editFarm 
+          <p className="text-slate-600 text-lg">
+            {editFarm
               ? 'Update your farm information and run a new analysis'
               : 'Help us understand your farm to provide personalized recommendations'
             }
           </p>
         </div>
-        
+
         {!editFarm && (
-          <div className="header-actions">
-            <button 
-              type="button" 
+          <div className="flex gap-2">
+            <button
+              type="button"
               onClick={handleClearForm}
-              className="btn btn-secondary btn-sm"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-slate-100 text-slate-700 border border-slate-200 rounded-md hover:bg-slate-200 hover:text-slate-900 transition-all"
             >
               <i className="fas fa-broom"></i>
               Clear Form
@@ -264,32 +264,32 @@ function FarmAnalyzer() {
       </div>
 
       {/* Form Section */}
-      <div className="form-container">
-        <form onSubmit={handleSubmit} className="farm-form">
-          
+      <div className="bg-white rounded-lg border border-slate-200 shadow-sm">
+        <form onSubmit={handleSubmit} className="p-6">
+
           {/* Basic Information Section */}
-          <div className="form-section">
-            <div className="section-header">
-              <h3 className="section-title">
-                <i className="fas fa-user"></i>
+          <div className="mb-8">
+            <div className="mb-4 pb-4 border-b border-slate-200">
+              <h3 className="text-2xl font-semibold text-slate-900 flex items-center gap-2">
+                <i className="fas fa-user text-teal-500"></i>
                 Basic Information
               </h3>
             </div>
-            
-            <div className="form-row">
-              <div className="form-group">
-                <label htmlFor="farm-id" className="form-label">
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label htmlFor="farm-id" className="block text-sm font-medium text-slate-700 mb-2">
                   Farm ID *
-                  <span className="label-helper">Unique identifier for your farm</span>
+                  <span className="text-xs text-slate-500 font-normal">Unique identifier for your farm</span>
                 </label>
-                <div className="input-group">
+                <div className="flex gap-2">
                   <input
                     type="text"
                     id="farm-id"
                     name="farm-id"
                     value={formData["farm-id"]}
                     onChange={handleChange}
-                    className="form-input"
+                    className="flex-1 px-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-md focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-opacity-40"
                     placeholder="Auto-generated ID"
                     required
                     readOnly={!!editFarm}
@@ -298,7 +298,7 @@ function FarmAnalyzer() {
                     <button
                       type="button"
                       onClick={handleRegenerateFarmId}
-                      className="btn btn-outline btn-sm"
+                      className="px-3 py-2 text-sm bg-transparent border border-slate-200 text-slate-700 rounded-md hover:bg-slate-100 transition-all"
                       title="Generate new Farm ID"
                     >
                       <i className="fas fa-sync-alt"></i>
@@ -307,8 +307,8 @@ function FarmAnalyzer() {
                 </div>
               </div>
 
-              <div className="form-group">
-                <label htmlFor="farmer-name" className="form-label">
+              <div>
+                <label htmlFor="farmer-name" className="block text-sm font-medium text-slate-700 mb-2">
                   Farmer Name *
                 </label>
                 <input
@@ -317,7 +317,7 @@ function FarmAnalyzer() {
                   name="farmer-name"
                   value={formData["farmer-name"]}
                   onChange={handleChange}
-                  className="form-input"
+                  className="w-full px-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-md focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-opacity-40"
                   placeholder="Enter your full name"
                   required
                 />
@@ -326,27 +326,27 @@ function FarmAnalyzer() {
           </div>
 
           {/* Location Section */}
-          <div className="form-section">
-            <div className="section-header">
-              <h3 className="section-title">
-                <i className="fas fa-map-marker-alt"></i>
+          <div className="mb-8">
+            <div className="mb-4 pb-4 border-b border-slate-200 flex justify-between items-center flex-wrap gap-2">
+              <h3 className="text-2xl font-semibold text-slate-900 flex items-center gap-2">
+                <i className="fas fa-map-marker-alt text-teal-500"></i>
                 Farm Location
               </h3>
               <button
                 type="button"
                 onClick={handleGetCurrentLocation}
-                className="btn btn-outline btn-sm"
+                className="inline-flex items-center gap-2 px-3 py-2 text-sm bg-transparent border border-slate-200 text-slate-700 rounded-md hover:bg-slate-100 transition-all"
               >
                 <i className="fas fa-crosshairs"></i>
                 Use Current Location
               </button>
             </div>
-            
-            <div className="form-row">
-              <div className="form-group">
-                <label htmlFor="latitude" className="form-label">
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div>
+                <label htmlFor="latitude" className="block text-sm font-medium text-slate-700 mb-2">
                   Latitude *
-                  <span className="label-helper">Decimal degrees (-90 to 90)</span>
+                  <span className="text-xs text-slate-500 font-normal">Decimal degrees (-90 to 90)</span>
                 </label>
                 <input
                   type="number"
@@ -354,7 +354,7 @@ function FarmAnalyzer() {
                   name="latitude"
                   value={formData.latitude}
                   onChange={handleChange}
-                  className="form-input"
+                  className="w-full px-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-md focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-opacity-40"
                   placeholder="e.g., 28.6139"
                   step="0.000001"
                   min="-90"
@@ -363,10 +363,10 @@ function FarmAnalyzer() {
                 />
               </div>
 
-              <div className="form-group">
-                <label htmlFor="longitude" className="form-label">
+              <div>
+                <label htmlFor="longitude" className="block text-sm font-medium text-slate-700 mb-2">
                   Longitude *
-                  <span className="label-helper">Decimal degrees (-180 to 180)</span>
+                  <span className="text-xs text-slate-500 font-normal">Decimal degrees (-180 to 180)</span>
                 </label>
                 <input
                   type="number"
@@ -374,7 +374,7 @@ function FarmAnalyzer() {
                   name="longitude"
                   value={formData.longitude}
                   onChange={handleChange}
-                  className="form-input"
+                  className="w-full px-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-md focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-opacity-40"
                   placeholder="e.g., 77.2090"
                   step="0.000001"
                   min="-180"
@@ -383,10 +383,10 @@ function FarmAnalyzer() {
                 />
               </div>
 
-              <div className="form-group">
-                <label htmlFor="area" className="form-label">
+              <div>
+                <label htmlFor="area" className="block text-sm font-medium text-slate-700 mb-2">
                   Farm Area *
-                  <span className="label-helper">In hectares</span>
+                  <span className="text-xs text-slate-500 font-normal">In hectares</span>
                 </label>
                 <input
                   type="number"
@@ -394,7 +394,7 @@ function FarmAnalyzer() {
                   name="area"
                   value={formData.area}
                   onChange={handleChange}
-                  className="form-input"
+                  className="w-full px-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-md focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-opacity-40"
                   placeholder="e.g., 5.5"
                   step="0.1"
                   min="0.1"
@@ -405,17 +405,17 @@ function FarmAnalyzer() {
           </div>
 
           {/* Address Section */}
-          <div className="form-section">
-            <div className="section-header">
-              <h3 className="section-title">
-                <i className="fas fa-home"></i>
+          <div className="mb-8">
+            <div className="mb-4 pb-4 border-b border-slate-200">
+              <h3 className="text-2xl font-semibold text-slate-900 flex items-center gap-2">
+                <i className="fas fa-home text-teal-500"></i>
                 Address Details
               </h3>
             </div>
-            
-            <div className="form-row">
-              <div className="form-group">
-                <label htmlFor="village" className="form-label">
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div>
+                <label htmlFor="village" className="block text-sm font-medium text-slate-700 mb-2">
                   Village/Town *
                 </label>
                 <input
@@ -424,14 +424,14 @@ function FarmAnalyzer() {
                   name="village"
                   value={formData.village}
                   onChange={handleChange}
-                  className="form-input"
+                  className="w-full px-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-md focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-opacity-40"
                   placeholder="Enter village or town name"
                   required
                 />
               </div>
 
-              <div className="form-group">
-                <label htmlFor="district" className="form-label">
+              <div>
+                <label htmlFor="district" className="block text-sm font-medium text-slate-700 mb-2">
                   District *
                 </label>
                 <input
@@ -440,14 +440,14 @@ function FarmAnalyzer() {
                   name="district"
                   value={formData.district}
                   onChange={handleChange}
-                  className="form-input"
+                  className="w-full px-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-md focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-opacity-40"
                   placeholder="Enter district name"
                   required
                 />
               </div>
 
-              <div className="form-group">
-                <label htmlFor="state" className="form-label">
+              <div>
+                <label htmlFor="state" className="block text-sm font-medium text-slate-700 mb-2">
                   State *
                 </label>
                 <input
@@ -456,7 +456,7 @@ function FarmAnalyzer() {
                   name="state"
                   value={formData.state}
                   onChange={handleChange}
-                  className="form-input"
+                  className="w-full px-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-md focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-opacity-40"
                   placeholder="Enter state name"
                   required
                 />
@@ -465,26 +465,26 @@ function FarmAnalyzer() {
           </div>
 
           {/* Crop Information Section */}
-          <div className="form-section">
-            <div className="section-header">
-              <h3 className="section-title">
-                <i className="fas fa-seedling"></i>
+          <div className="mb-8">
+            <div className="mb-4 pb-4 border-b border-slate-200">
+              <h3 className="text-2xl font-semibold text-slate-900 flex items-center gap-2">
+                <i className="fas fa-seedling text-teal-500"></i>
                 Crop Information
               </h3>
             </div>
-            
-            <div className="form-row">
-              <div className="form-group full-width">
-                <label htmlFor="main-crop" className="form-label">
+
+            <div>
+              <div>
+                <label htmlFor="main-crop" className="block text-sm font-medium text-slate-700 mb-2">
                   Main Crop *
-                  <span className="label-helper">Primary crop you want to grow or are currently growing</span>
+                  <span className="text-xs text-slate-500 font-normal">Primary crop you want to grow or are currently growing</span>
                 </label>
                 <select
                   id="main-crop"
                   name="main-crop"
                   value={formData["main-crop"]}
                   onChange={handleChange}
-                  className="form-select"
+                  className="w-full px-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-md focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-opacity-40 appearance-none"
                   required
                 >
                   <option value="">Select main crop</option>
@@ -506,25 +506,25 @@ function FarmAnalyzer() {
           </div>
 
           {/* Form Actions */}
-          <div className="form-actions">
-            <div className="action-buttons">
+          <div className="pt-6 border-t border-slate-200">
+            <div className="flex gap-4 justify-between items-center mb-4 flex-wrap">
               <button
                 type="button"
                 onClick={() => navigate('/dashboard')}
-                className="btn btn-secondary"
+                className="inline-flex items-center gap-2 px-4 py-2 bg-slate-100 text-slate-700 border border-slate-200 rounded-md hover:bg-slate-200 hover:text-slate-900 transition-all"
               >
                 <i className="fas fa-arrow-left"></i>
                 Back to Dashboard
               </button>
-              
+
               <button
                 type="submit"
-                className="btn btn-primary"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-teal-500 text-white font-semibold rounded-md hover:bg-teal-600 transition-all shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
                 disabled={isProcessing}
               >
                 {isProcessing ? (
                   <>
-                    <div className="loading-spinner-sm"></div>
+                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
                     Processing...
                   </>
                 ) : (
@@ -535,11 +535,11 @@ function FarmAnalyzer() {
                 )}
               </button>
             </div>
-            
-            <div className="form-footer">
-              <p className="footer-note">
-                <i className="fas fa-info-circle"></i>
-                Your farm data is securely stored and will help us provide personalized recommendations 
+
+            <div className="bg-slate-50 rounded-lg p-4 border border-slate-200">
+              <p className="text-sm text-slate-600 flex items-start gap-2">
+                <i className="fas fa-info-circle text-teal-500 mt-0.5 flex-shrink-0"></i>
+                Your farm data is securely stored and will help us provide personalized recommendations
                 based on your location, soil conditions, and climate patterns.
               </p>
             </div>

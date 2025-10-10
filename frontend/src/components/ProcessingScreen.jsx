@@ -212,112 +212,133 @@ const ProcessingScreen = () => {
   }, [task_id, navigate, getAuthHeaders]);
 
   return (
-    <div className="processing-container">
-      <div className="processing-card">
+    <div className="min-h-screen bg-gradient-to-br from-teal-50 via-green-50 to-blue-50 flex items-center justify-center p-4">
+      <div className="max-w-4xl w-full bg-white rounded-2xl shadow-2xl overflow-hidden">
         {/* Header */}
-        <div className="processing-header">
-          <div className="processing-icon">
-            <i className="fas fa-brain fa-2x"></i>
+        <div className="text-center p-8 bg-gradient-to-r from-teal-500 to-green-500 text-white">
+          <div className="inline-flex items-center justify-center w-20 h-20 bg-white bg-opacity-20 rounded-full mb-6">
+            <i className="fas fa-brain text-3xl text-white"></i>
           </div>
-          <h1 className="processing-title">AI Analysis in Progress</h1>
-          <p className="processing-subtitle">
+          <h1 className="text-4xl font-bold mb-4">AI Analysis in Progress</h1>
+          <p className="text-lg text-teal-100 max-w-2xl mx-auto">
             We're analyzing your farm data using advanced AI to provide the best recommendations
           </p>
         </div>
 
-        {/* Progress Overview */}
-        <div className="progress-overview">
-          <div className="progress-circle">
-            <svg viewBox="0 0 36 36" className="circular-chart">
-              <path
-                className="circle-bg"
-                d="M18 2.0845
-                   a 15.9155 15.9155 0 0 1 0 31.831
-                   a 15.9155 15.9155 0 0 1 0 -31.831"
-              />
-              <path
-                className="circle"
-                strokeDasharray={`${overallProgress}, 100`}
-                d="M18 2.0845
-                   a 15.9155 15.9155 0 0 1 0 31.831
-                   a 15.9155 15.9155 0 0 1 0 -31.831"
-              />
-              <text x="18" y="20.35" className="percentage">
-                {Math.round(overallProgress)}%
-              </text>
-            </svg>
-          </div>
-          
-          <div className="progress-info">
-            <h2 className="progress-status">{overallStatus}</h2>
-            <div className="progress-bar">
-              <div 
-                className="progress-fill"
-                style={{ width: `${overallProgress}%` }}
-              ></div>
-            </div>
-            <p className="progress-text">
-              {Math.round(overallProgress)}% Complete
-            </p>
-          </div>
-        </div>
-
-        {/* Processing Steps */}
-        <div className="processing-steps">
-          <h3 className="steps-title">Processing Steps</h3>
-          <div className="steps-list">
-            {steps.map((step, index) => (
-              <div
-                key={step.id}
-                className={`step-item ${step.completed ? 'completed' : ''} ${step.active ? 'active' : ''}`}
-              >
-                <div className="step-indicator">
-                  <div className="step-icon">
-                    {step.completed ? (
-                      <i className="fas fa-check"></i>
-                    ) : step.active ? (
-                      <i className={`${step.icon} fa-pulse`}></i>
-                    ) : (
-                      <i className={step.icon}></i>
-                    )}
-                  </div>
-                  {index < steps.length - 1 && (
-                    <div className={`step-connector ${step.completed ? 'completed' : ''}`}></div>
-                  )}
-                </div>
-                
-                <div className="step-content">
-                  <div className="step-header">
-                    <h4 className="step-title">{step.title}</h4>
-                    <span className={`step-status ${step.status.toLowerCase().replace(' ', '-')}`}>
-                      {step.status}
-                    </span>
-                  </div>
-                  <p className="step-description">{step.description}</p>
-                  {step.time && (
-                    <p className="step-time">
-                      <i className="fas fa-clock"></i>
-                      {step.time}
-                    </p>
-                  )}
+          {/* Progress Overview */}
+          <div className="p-8">
+            <div className="flex items-center justify-center gap-8 mb-8 flex-wrap">
+              <div className="relative w-32 h-32">
+                <svg className="w-32 h-32" viewBox="0 0 36 36">
+                  <path
+                    className="text-slate-200"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    fill="none"
+                    d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                  />
+                  <path
+                    className="text-teal-500 transition-all duration-500 ease-out"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    fill="none"
+                    strokeDasharray={`${overallProgress}, 100`}
+                    d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                  />
+                </svg>
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <span className="text-2xl font-bold text-slate-900">
+                    {Math.round(overallProgress)}%
+                  </span>
                 </div>
               </div>
-            ))}
-          </div>
-        </div>
 
-        {/* Processing Tips */}
-        <div className="processing-tips">
-          <h4 className="tips-title">
-            <i className="fas fa-lightbulb"></i>
-            Did you know?
-          </h4>
-          <div className="tips-content">
-            <p>Our AI analyzes over 147 crop varieties and considers 15 different agro-climatic zones to find the perfect match for your farm conditions.</p>
+              <div className="flex-1 min-w-64">
+                <h2 className="text-2xl font-semibold text-slate-900 mb-4">{overallStatus}</h2>
+                <div className="w-full bg-slate-200 rounded-full h-3 mb-2">
+                  <div
+                    className="bg-gradient-to-r from-teal-500 to-green-500 h-3 rounded-full transition-all duration-500 ease-out"
+                    style={{ width: `${overallProgress}%` }}
+                  ></div>
+                </div>
+                <p className="text-slate-600">
+                  {Math.round(overallProgress)}% Complete
+                </p>
+              </div>
+            </div>
+
+            {/* Processing Steps */}
+            <div className="mb-8">
+              <h3 className="text-2xl font-semibold text-slate-900 mb-6 text-center">Processing Steps</h3>
+              <div className="space-y-4">
+                {steps.map((step, index) => (
+                  <div
+                    key={step.id}
+                    className={`flex items-start gap-4 p-4 rounded-lg border-2 transition-all duration-300 ${
+                      step.completed ? 'bg-green-50 border-green-200' :
+                      step.active ? 'bg-blue-50 border-blue-200' :
+                      'bg-slate-50 border-slate-200'
+                    }`}
+                  >
+                    <div className="flex flex-col items-center">
+                      <div className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 ${
+                        step.completed ? 'bg-green-500 text-white' :
+                        step.active ? 'bg-blue-500 text-white animate-pulse' :
+                        'bg-slate-300 text-slate-600'
+                      }`}>
+                        {step.completed ? (
+                          <i className="fas fa-check text-sm"></i>
+                        ) : step.active ? (
+                          <i className={`${step.icon} text-sm`}></i>
+                        ) : (
+                          <i className={`${step.icon} text-sm`}></i>
+                        )}
+                      </div>
+                      {index < steps.length - 1 && (
+                        <div className={`w-0.5 h-8 mt-2 transition-all duration-300 ${
+                          step.completed ? 'bg-green-500' : 'bg-slate-300'
+                        }`}></div>
+                      )}
+                    </div>
+
+                    <div className="flex-1">
+                      <div className="flex justify-between items-start mb-2">
+                        <h4 className="font-semibold text-slate-900">{step.title}</h4>
+                        <span className={`text-xs font-semibold px-2 py-1 rounded-full ${
+                          step.status === 'Completed' ? 'bg-green-100 text-green-700' :
+                          step.status === 'In Progress' ? 'bg-blue-100 text-blue-700' :
+                          'bg-slate-100 text-slate-600'
+                        }`}>
+                          {step.status}
+                        </span>
+                      </div>
+                      <p className="text-slate-600 mb-2">{step.description}</p>
+                      {step.time && (
+                        <p className="text-xs text-slate-500 flex items-center gap-1">
+                          <i className="fas fa-clock"></i>
+                          {step.time}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Processing Tips */}
+            <div className="bg-gradient-to-r from-amber-50 to-orange-50 rounded-lg p-6">
+              <h4 className="text-lg font-semibold text-amber-800 mb-3 flex items-center gap-2">
+                <i className="fas fa-lightbulb text-amber-500"></i>
+                Did you know?
+              </h4>
+              <div className="bg-white bg-opacity-60 rounded-lg p-4">
+                <p className="text-amber-700">Our AI analyzes over 147 crop varieties and considers 15 different agro-climatic zones to find the perfect match for your farm conditions.</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
   );
 };
 

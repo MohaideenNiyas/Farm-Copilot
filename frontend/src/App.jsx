@@ -1,7 +1,8 @@
 // src/App.jsx - Updated with Authentication and New Routing
 
-import React from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import React, { useState } from "react";
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Login from "./components/Login";
@@ -20,16 +21,72 @@ import AuthLayout from "./components/AuthLayout";
 import DashboardLayout from "./components/DashboardLayout";
 import LandingPage from "./components/LandingPage";
 
+// Wrapper component to handle modal state based on route
+function LandingPageWithModal() {
+  const location = useLocation();
+  const [activeModal, setActiveModal] = useState(() => {
+    // Set initial modal state based on current path
+    if (location.pathname === '/login') return 'login';
+    if (location.pathname === '/register') return 'register';
+    return null;
+  });
+
+  const closeModal = () => {
+    setActiveModal(null);
+    // Navigate back to home when closing modal
+    window.history.replaceState(null, '', '/');
+  };
+
+  const switchToRegister = () => {
+    setActiveModal('register');
+    window.history.replaceState(null, '', '/register');
+  };
+
+  const switchToLogin = () => {
+    setActiveModal('login');
+    window.history.replaceState(null, '', '/login');
+  };
+
+  return (
+    <LandingPage
+      initialModal={activeModal}
+      onModalClose={closeModal}
+      onSwitchToRegister={switchToRegister}
+      onSwitchToLogin={switchToLogin}
+    />
+  );
+}
+
 function App() {
   return (
     <AuthProvider>
       <Router>
         <div className="App">
+          <Toaster
+            position="top-right"
+            toastOptions={{
+              duration: 4000,
+              style: {
+                background: '#10B981',
+                color: '#fff',
+              },
+              success: {
+                style: {
+                  background: '#10B981',
+                },
+              },
+              error: {
+                style: {
+                  background: '#EF4444',
+                },
+              },
+            }}
+          />
           <Routes>
             {/* Public Routes */}
-            <Route path="/" element={<LandingPage />} />
-            <Route path="/login" element={<AuthLayout><Login /></AuthLayout>} />
-            <Route path="/register" element={<AuthLayout><Register /></AuthLayout>} />
+            <Route path="/" element={<LandingPageWithModal />} />
+            <Route path="/login" element={<LandingPageWithModal />} />
+            <Route path="/register" element={<LandingPageWithModal />} />
 
             {/* Protected Routes - Dashboard */}
             <Route path="/dashboard" element={

@@ -4,7 +4,7 @@ import React from 'react';
 
 function AuthLayout({ children }) {
   return (
-    <div className="auth-layout">
+    <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-emerald-50">
       {children}
     </div>
   );

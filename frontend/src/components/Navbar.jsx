@@ -19,20 +19,24 @@ function Navbar() {
   ];
 
   return (
-    <nav className="navbar">
-      <div className="navbar-content">
-        {navItems.map((item) => (
-          <NavLink
-            key={item.path}
-            to={item.path}
-            className={({ isActive }) =>
-              `nav-btn ${isActive ? "nav-btn--active" : ""}`
-            }
-          >
-            <i className={item.icon}></i>
-            <span>{item.label}</span>
-          </NavLink>
-        ))}
+    <nav className="sticky top-0 z-50 bg-white border-b border-slate-200 backdrop-blur-md shadow-sm">
+      <div className="max-w-7xl mx-auto px-4">
+        <div className="flex items-center justify-center gap-4 py-3 flex-wrap">
+          {navItems.map((item) => (
+            <NavLink
+              key={item.path}
+              to={item.path}
+              className={({ isActive }) =>
+                `inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-md transition-all hover:bg-slate-100 ${
+                  isActive ? "bg-teal-500 text-white shadow-md" : "text-slate-600 hover:text-teal-600"
+                }`
+              }
+            >
+              <i className={item.icon}></i>
+              <span className="hidden sm:inline">{item.label}</span>
+            </NavLink>
+          ))}
+        </div>
       </div>
     </nav>
   );
